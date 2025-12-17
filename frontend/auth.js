@@ -38,21 +38,60 @@ function showLogoutNav() {
 }
 
 function createPasswordToggle(input) {
+  // Check if toggle already exists
+  if (input.parentNode && input.parentNode.classList.contains('input-with-toggle')) {
+    return; // Already has toggle
+  }
+
   const wrapper = document.createElement('div');
   wrapper.className = 'input-with-toggle';
-  input.parentNode.replaceChild(wrapper, input);
+  wrapper.style.position = 'relative';
+
+  // Get the parent before replacing
+  const parent = input.parentNode;
+  if (!parent) {
+    return;
+  }
+
+  // Replace input with wrapper, then put input inside wrapper
+  parent.replaceChild(wrapper, input);
+  input.style.paddingRight = '3.25rem';
+  input.style.boxSizing = 'border-box';
   wrapper.appendChild(input);
 
   const btn = document.createElement('button');
   btn.type = 'button';
   btn.className = 'password-toggle';
-  btn.setAttribute('aria-label', 'Show password');
+  btn.setAttribute('aria-label', 'Toggle password visibility');
   btn.innerHTML = 'Show';
-  btn.addEventListener('click', () => {
-    const isPwd = input.type === 'password';
-    input.type = isPwd ? 'text' : 'password';
-    btn.innerHTML = isPwd ? 'Hide' : 'Show';
-    btn.classList.toggle('active', isPwd);
+  btn.style.cssText = `
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: rgba(255,255,255,0.95);
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    transition: transform 220ms ease, background-color 220ms ease;
+    z-index: 10;
+  `;
+
+  // Prevent form submission when clicking the toggle button
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const isCurrentlyPassword = input.type === 'password';
+    input.type = isCurrentlyPassword ? 'text' : 'password';
+    btn.innerHTML = isCurrentlyPassword ? 'Hide' : 'Show';
+    btn.classList.toggle('active', isCurrentlyPassword);
+
+    // Update aria-label for accessibility
+    btn.setAttribute('aria-label', isCurrentlyPassword ? 'Hide password' : 'Show password');
   });
 
   wrapper.appendChild(btn);
