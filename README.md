@@ -71,14 +71,14 @@ EmoWell/
 
 1. **Clone or Download** the project files
 
-2. **Start the Development Server**
+2. **Start the Development Server** (deployment to happen soon :) )
    ```bash
    cd path/to/EmoWell
    python -m http.server 8000
    ```
 
 3. **Open in Browser**
-   - Navigate to `http://localhost:8000`
+   - Navigate to `http://localhost:8000`; live server if present changes to be made
    - The application will automatically handle authentication flow
 
 ## 🎯 How It Works
@@ -123,7 +123,7 @@ EmoWell/
 - **Memory Game**: Pattern matching for mental stimulation
 - **Sudoku**: Logic puzzles for stress relief
 - **Game Selection**: Intuitive game picker interface
-
+** some games are optimal for mobile touch screens desktop users have good tic tac toe for them **
 ### Technical Implementation
 
 #### Authentication System
